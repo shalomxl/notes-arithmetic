@@ -1,27 +1,47 @@
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"math/rand"
+	"time"
+)
 
-func main() {
-
-	var arr = []int{20, 19, 5, 13, 89, 56, 23}
-	NewArr := InsertionSort(arr)
-	fmt.Println(NewArr)
-
+type InsertSort struct {
+	arr []int
 }
-func InsertionSort(arr []int) []int {
 
-	for i := 1; i < len(arr); i++ {
+func Init(n int) *InsertSort {
 
-		insertval := arr[i]
-		insertIndex := i - 1
-		for insertIndex >= 0 && arr[insertIndex] < insertval {
-			arr[insertIndex+1] = arr[insertIndex]
-			insertIndex--
+	var insertsort InsertSort
+	rand.Seed(time.Now().UnixNano())
+	rand.Intn(10000)
+	for i := 0; i < n; i++ {
+		m := rand.Intn(10000)
+		insertsort.arr = append(insertsort.arr, m)
+	}
+	return &insertsort
+}
+
+func (this *InsertSort) InsertSort() {
+
+	for i := 1; i < len(this.arr); i++ {
+		insertval := this.arr[i]
+		indexpre := i - 1
+		for indexpre >= 0 && insertval < this.arr[indexpre] {
+			this.arr[indexpre+1] = this.arr[indexpre]
+			indexpre--
 		}
-		if insertIndex+1 != i {
-			arr[insertIndex+1] = insertval
+		if indexpre+1 != i {
+			this.arr[indexpre+1] = insertval
 		}
 	}
-	return arr
+	fmt.Println(this.arr)
+}
+
+func main() {
+	val := flag.Int("value", 1000, "Init val")
+	flag.Parse()
+	var insertsort = Init(*val)
+	insertsort.InsertSort()
 }
