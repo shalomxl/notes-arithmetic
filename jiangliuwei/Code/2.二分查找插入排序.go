@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	arr := []int{1, 2, 3, 4, 5, 6, 7}
+	arr := []int{20, 15, 8, 61, 79, 26, 8, 78, 56, 79}
 
 	//将arr分成无序区和有序区，初始的有序区只有一个元素
 	//将i-1分为有序区，将i~len（arr）-1分为无序区
@@ -28,15 +28,15 @@ func BinarySearchIndex(arr []int, maxIndex int, data int) int {
 	end := maxIndex
 	var mid int
 	for {
-		if begin == end {
+		if begin >= end {
 			break
 		}
 		mid = (begin + end) / 2
 		//如果插入的数字和中间的数字相同，就放到后面，这是一个稳定的查找
 		if arr[mid] > data {
-			end--
+			end = mid - 1
 		} else {
-			begin++
+			begin = mid + 1
 		}
 	}
 	return begin
